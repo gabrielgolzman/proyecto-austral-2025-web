@@ -4,6 +4,7 @@ import { books as BOOK_DATA } from "./data/books"
 
 import Books from "./components/books/Books"
 import NewBook from "./components/newBook/NewBook"
+import Login from "./components/auth/login/Login"
 
 const App = () => {
   const [books, setBooks] = useState(BOOK_DATA);
@@ -23,6 +24,7 @@ const App = () => {
       <p>¡Bienvenidos a book champions!</p>
       <NewBook onBookAdded={handleAddBook} />
       <Books books={books} />
+      {/* <Login /> */}
     </div>
   )
 }
