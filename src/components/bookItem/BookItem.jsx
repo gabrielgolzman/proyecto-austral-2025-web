@@ -4,17 +4,23 @@ import { Star, StarFill } from "react-bootstrap-icons"
 import './bookItem.css';
 
 const BookItem = ({
+    id,
     title,
     author,
     rating,
     pageCount,
     imageUrl,
     available = false,
-    onBookSelected
+    onBookSelected,
+    onDelete
 }) => {
 
     const handleSelectBook = () => {
         onBookSelected(title);
+    }
+
+    const handleDeleteBook = () => {
+        onDelete(id, title)
     }
 
     const filledStars = Array.from({ length: Math.min(rating, 5) }, (_, i) =>
@@ -45,6 +51,7 @@ const BookItem = ({
                 </div>
                 <p>{pageCount} páginas</p>
                 <p>{available ? "Disponible" : "No disponible"}</p>
+                <Button variant="danger" className="me-2" onClick={handleDeleteBook}>Eliminar libro</Button>
                 <Button onClick={handleSelectBook}>Seleccionar libro</Button>
             </Card.Body>
         </Card>

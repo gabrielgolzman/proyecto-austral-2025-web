@@ -10,7 +10,6 @@ const App = () => {
   const [books, setBooks] = useState(BOOK_DATA);
 
   const handleAddBook = (newBook) => {
-
     const newBookWithId = {
       id: books[books.length - 1].id + 1,
       ...newBook,
@@ -18,12 +17,16 @@ const App = () => {
     setBooks(prevBooks => [newBookWithId, ...prevBooks])
   }
 
+  const handleDeleteBook = (id) => {
+    setBooks(prevBooks => prevBooks.filter(book => book.id !== id))
+  }
+
   return (
     <div className="d-flex flex-column align-items-center ">
       <h1>Book Champions</h1>
       <p>¡Bienvenidos a book champions!</p>
       <NewBook onBookAdded={handleAddBook} />
-      <Books books={books} />
+      <Books books={books} onDeleteBook={handleDeleteBook} />
       {/* <Login /> */}
     </div>
   )
