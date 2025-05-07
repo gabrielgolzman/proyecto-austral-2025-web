@@ -2,8 +2,9 @@
 
 import { useRef, useState } from "react";
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({
@@ -13,6 +14,8 @@ const Login = () => {
 
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const handleChangeEmail = (event) => {
         setEmail(event.target.value);
@@ -53,8 +56,8 @@ const Login = () => {
             return;
         }
 
-        alert(`Inicio de sesión correcto para email: ${email} `)
-
+        onLogin();
+        navigate("/library")
     }
 
     return (
