@@ -33,7 +33,7 @@ const BookItem = ({
         <Card className="book-container mx-3 mb-2">
             <Card.Img
                 height={400}
-                src={imageUrl}
+                src={imageUrl ?? '#'}
                 variant="top"
             />
             <Card.Body>

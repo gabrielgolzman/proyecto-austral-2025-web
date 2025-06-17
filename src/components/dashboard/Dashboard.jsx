@@ -1,20 +1,54 @@
-import { useState } from "react";
-
-import { books as BOOK_DATA } from "../../data/books"
+import { useEffect, useState } from "react";
 
 import Books from "../books/Books"
 import NewBook from "../newBook/NewBook"
 import { Button, Col, Row } from "react-bootstrap";
 
 const Dashboard = ({ onLogout }) => {
-    const [books, setBooks] = useState(BOOK_DATA);
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+        console.log("Dashboard triggered effect")
+
+        fetch("http://localhost:3000/books")
+            .then(res => res.json())
+            .then(data => {
+                setBooks([...data])
+                // setBooks(data.map(book => ({
+                //     id: book.id,
+                //     title: book.title,
+                //     author: book.author.name,
+                //     pageCount: 100,
+                //     rating: 5,
+                //     imageUrl: null,
+                //     available: true
+                // })))
+            })
+            .catch(err => console.log(err))
+    }, [])
+
 
     const handleAddBook = (newBook) => {
         const newBookWithId = {
             id: books[books.length - 1].id + 1,
             ...newBook,
         };
-        setBooks(prevBooks => [newBookWithId, ...prevBooks])
+        fetch("http://localhost:3000/books", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer `
+            },
+            method: "POST",
+            body: JSON.stringify({
+                title: newBook.title
+            })
+        })
+            .then(res => res.json())
+            .then(() => {
+                setBooks(prevBooks => [newBookWithId, ...prevBooks]);
+            })
+            .catch(err => console.log(err))
+
     }
 
     const handleDeleteBook = (id) => {
