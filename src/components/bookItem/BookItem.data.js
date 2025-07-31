@@ -1,0 +1,1 @@
+export const DEFAULT_BOOK_IMAGE = "https://images.pexels.com/photos/4248603/pexels-photo-4248603.jpeg";

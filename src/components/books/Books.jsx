@@ -52,11 +52,11 @@ const Books = ({ books, onDeleteBook }) => {
                 key={book.id}
                 id={book.id}
                 title={book.title}
-                author={book.author}
+                authors={book.authors}
                 rating={book.rating}
-                pageCount={book.pageCount}
+                pagesAmount={book.pagesAmount}
                 imageUrl={book.imageUrl}
-                available={book.available}
+                isAvaliable={book.isAvailable}
                 onBookSelected={handleSelectBook}
                 onDelete={handleDelete}
             />

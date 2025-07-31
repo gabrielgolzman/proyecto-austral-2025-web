@@ -10,19 +10,11 @@ const Dashboard = ({ onLogout }) => {
     useEffect(() => {
         console.log("Dashboard triggered effect")
 
-        fetch("http://localhost:3000/books")
+        fetch("https://localhost:7120/api/book")
             .then(res => res.json())
             .then(data => {
-                setBooks([...data])
-                // setBooks(data.map(book => ({
-                //     id: book.id,
-                //     title: book.title,
-                //     author: book.author.name,
-                //     pageCount: 100,
-                //     rating: 5,
-                //     imageUrl: null,
-                //     available: true
-                // })))
+                setBooks([...data.result])
+
             })
             .catch(err => console.log(err))
     }, [])
@@ -33,10 +25,9 @@ const Dashboard = ({ onLogout }) => {
             id: books[books.length - 1].id + 1,
             ...newBook,
         };
-        fetch("http://localhost:3000/books", {
+        fetch("http://localhost:7120/book", {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer `
             },
             method: "POST",
             body: JSON.stringify({
