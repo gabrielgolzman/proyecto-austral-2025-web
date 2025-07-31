@@ -26,9 +26,9 @@ const App = () => {
           <Route
             path="/library"
             element={
-              <Protected isSignedIn={isSignedIn}>
-                <Dashboard onLogout={handleLogout} />
-              </Protected>
+              // <Protected isSignedIn={isSignedIn}>
+              <Dashboard onLogout={handleLogout} />
+              // </Protected>
             }
           />
           <Route path="*" element={<NotFound />} />

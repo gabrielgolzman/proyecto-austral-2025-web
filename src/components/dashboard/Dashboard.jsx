@@ -25,7 +25,7 @@ const Dashboard = ({ onLogout }) => {
             id: books[books.length - 1].id + 1,
             ...newBook,
         };
-        fetch("http://localhost:7120/book", {
+        fetch("http://localhost:7120/api/book", {
             headers: {
                 "Content-Type": "application/json",
             },

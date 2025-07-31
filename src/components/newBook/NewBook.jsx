@@ -1,20 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import Select from "react-select";
+import { multiColourStyles } from "./NewBook.data";
 
 const NewBook = ({ onBookAdded }) => {
     const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
+    const [authors, setAuthors] = useState([]);
     const [rating, setRating] = useState('');
     const [pageCount, setPageCount] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [available, setAvailable] = useState(false);
 
+    const [authorOptions, setAuthorOptions] = useState([])
+
+    useEffect(() => {
+        fetch("https://localhost:7120/api/author")
+            .then(res => res.json())
+            .then(data => {
+                setAuthorOptions([...data.result.map(author => ({
+                    value: author.id,
+                    label: author.name
+                }))])
+
+            })
+            .catch(err => console.log(err))
+    }, [])
+
     const handleChangeTitle = (event) => {
         setTitle(event.target.value)
     }
 
-    const handleChangeAuthor = (event) => {
-        setAuthor(event.target.value)
+    const handleChangeAuthor = (authors) => {
+        setAuthors(authors)
     }
 
     const handleChangeRating = (event) => {
@@ -37,7 +54,7 @@ const NewBook = ({ onBookAdded }) => {
         event.preventDefault();
         const newBook = {
             title,
-            author,
+            authors,
             rating,
             pageCount,
             imageUrl,
@@ -46,7 +63,7 @@ const NewBook = ({ onBookAdded }) => {
 
         onBookAdded(newBook);
         setTitle('');
-        setAuthor('');
+        setAuthors([]);
         setRating('');
         setPageCount('');
         setImageUrl('');
@@ -72,11 +89,14 @@ const NewBook = ({ onBookAdded }) => {
                         <Col md={6}>
                             <Form.Group className="mb-3" controlId="author">
                                 <Form.Label>Autor</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ingresar autor"
+                                <Select
+                                    placeholder="No hay autores seleccionados"
+                                    isMulti
                                     onChange={handleChangeAuthor}
-                                    value={author}
+                                    name="authors"
+                                    options={authorOptions}
+                                    value={authors}
+                                    styles={multiColourStyles}
                                 />
                             </Form.Group>
                         </Col>
