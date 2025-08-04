@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { Button, Col, Row } from "react-bootstrap";
+
+import { addBook, deleteBook } from "./Dashboard.server";
 
 import Books from "../books/Books"
 import NewBook from "../newBook/NewBook"
-import { Button, Col, Row } from "react-bootstrap";
 
 const Dashboard = ({ onLogout }) => {
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
-        console.log("Dashboard triggered effect")
-
-        fetch("https://localhost:7120/api/book")
+        fetch(`${import.meta.env.VITE_BASE_SERVER_URL}/api/book`)
             .then(res => res.json())
             .then(data => {
                 setBooks([...data.result])
@@ -19,31 +19,32 @@ const Dashboard = ({ onLogout }) => {
             .catch(err => console.log(err))
     }, [])
 
-
     const handleAddBook = (newBook) => {
-        const newBookWithId = {
-            id: books[books.length - 1].id + 1,
-            ...newBook,
-        };
-        fetch("http://localhost:7120/api/book", {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify({
-                title: newBook.title
-            })
-        })
-            .then(res => res.json())
-            .then(() => {
+        addBook(newBook,
+            (newId) => {
+                const newBookWithId = {
+                    id: newId,
+                    ...newBook,
+                };
                 setBooks(prevBooks => [newBookWithId, ...prevBooks]);
-            })
-            .catch(err => console.log(err))
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
 
     }
 
     const handleDeleteBook = (id) => {
-        setBooks(prevBooks => prevBooks.filter(book => book.id !== id))
+        deleteBook(id,
+            () => {
+                setBooks(prevBooks => prevBooks.filter(book => book.id !== id))
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
+
     }
     return (
         <>

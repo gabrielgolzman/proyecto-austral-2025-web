@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import Select from "react-select";
 import { multiColourStyles } from "./NewBook.data";
+import { getAuthors } from "./NewBook.server";
 
 const NewBook = ({ onBookAdded }) => {
     const [title, setTitle] = useState('');
@@ -14,16 +15,16 @@ const NewBook = ({ onBookAdded }) => {
     const [authorOptions, setAuthorOptions] = useState([])
 
     useEffect(() => {
-        fetch("https://localhost:7120/api/author")
-            .then(res => res.json())
-            .then(data => {
+        getAuthors(
+            (data) => {
                 setAuthorOptions([...data.result.map(author => ({
                     value: author.id,
                     label: author.name
                 }))])
+            },
+            () => {
 
             })
-            .catch(err => console.log(err))
     }, [])
 
     const handleChangeTitle = (event) => {

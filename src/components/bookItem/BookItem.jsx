@@ -21,7 +21,7 @@ const BookItem = ({
     }
 
     const handleDeleteBook = () => {
-        onDelete(id, title)
+        onDelete(id)
     }
 
     const filledStars = Array.from({ length: Math.min(rating, 5) }, (_, i) =>
