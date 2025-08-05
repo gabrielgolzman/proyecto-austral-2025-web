@@ -6,6 +6,7 @@ import { getAuthors } from "./NewBook.server";
 
 const NewBook = ({ onBookAdded }) => {
     const [title, setTitle] = useState('');
+    const [summary, setSummary] = useState('');
     const [authors, setAuthors] = useState([]);
     const [rating, setRating] = useState('');
     const [pageCount, setPageCount] = useState('');
@@ -51,19 +52,26 @@ const NewBook = ({ onBookAdded }) => {
         setAvailable(event.target.checked)
     }
 
+    const handleChangeSummary = (event) => {
+        setSummary(event.target.value)
+    }
+
     const handleAddBook = (event) => {
         event.preventDefault();
         const newBook = {
             title,
-            authors,
-            rating,
-            pageCount,
+            authorIds: authors.map(author => author.value),
+            rating: parseInt(rating),
+            pagesAmount: parseInt(pageCount),
             imageUrl,
+            summary,
             available
         };
 
+
         onBookAdded(newBook);
         setTitle('');
+        setSummary('');
         setAuthors([]);
         setRating('');
         setPageCount('');
@@ -99,6 +107,12 @@ const NewBook = ({ onBookAdded }) => {
                                     value={authors}
                                     styles={multiColourStyles}
                                 />
+                            </Form.Group>
+                        </Col>
+                        <Col md={12}>
+                            <Form.Group className="mb-3" controlId="summary">
+                                <Form.Label>Resumen</Form.Label>
+                                <Form.Control as="textarea" rows={3} placeholder="Ingresa un resumen del libro" onChange={handleChangeSummary} value={summary} />
                             </Form.Group>
                         </Col>
                     </Row>
