@@ -21,12 +21,14 @@ const Dashboard = ({ onLogout }) => {
 
     const handleAddBook = (newBook) => {
         addBook(newBook,
-            (newId) => {
-                const newBookWithId = {
-                    id: newId,
-                    ...newBook,
-                };
-                setBooks(prevBooks => [newBookWithId, ...prevBooks]);
+            (response) => {
+                console.log(response)
+                fetch(`${import.meta.env.VITE_BASE_SERVER_URL}/api/book`)
+                    .then(res => res.json())
+                    .then(data => {
+                        setBooks([...data.result])
+                    })
+                    .catch(err => console.log(err))
             },
             (err) => {
                 console.log(err)

@@ -17,5 +17,6 @@ export const initialForm = {
     rating: '',
     pageAmount: '',
     imageUrl: '',
-    isAvailable: ''
+    isAvailable: '',
+    summary: ''
 }

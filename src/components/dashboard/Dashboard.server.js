@@ -6,8 +6,7 @@ export const getBooks = (onSuccess, onError) => {
 }
 
 export const addBook = (rq, onSuccess, onError) => {
-    const { title, authorIds, rating, pageAmount, imageUrl, summary, isAvaliable } = rq;
-
+    const { title, authorIds, rating, pagesAmount, imageUrl, summary, isAvailable } = rq;
     fetch(`${import.meta.env.VITE_BASE_SERVER_URL}/api/book`, {
         headers: {
             "Content-Type": "application/json",
@@ -17,10 +16,10 @@ export const addBook = (rq, onSuccess, onError) => {
             title,
             authorIds,
             rating,
-            pageAmount,
+            pagesAmount,
             imageUrl,
             summary,
-            isAvaliable
+            isAvailable
         })
     })
         .then(res => res.json())
