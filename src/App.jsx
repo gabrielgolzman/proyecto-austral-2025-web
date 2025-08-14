@@ -5,6 +5,7 @@ import Login from "./components/auth/login/Login"
 import Dashboard from "./components/dashboard/Dashboard"
 import NotFound from "./components/routes/notFound/NotFound"
 import Protected from "./components/routes/protected/Protected"
+import Register from "./components/auth/register/Register"
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -24,7 +25,7 @@ const App = () => {
           <Route path='/' element={<Navigate to='login' />} />
           <Route
             path="/login" element={<Login onLogin={handleLogin} />} />
-          {/* <Route path='/register' element={<Register />} /> */}
+          <Route path='/register' element={<Register />} />
           <Route element={<Protected isSignedIn={isSignedIn} />}>
             <Route path="/library/*" element={<Dashboard onLogout={handleLogout} />} />
           </Route>
