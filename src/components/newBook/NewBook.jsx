@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import Select from "react-select";
+import { useNavigate } from "react-router";
 import { multiColourStyles } from "./NewBook.data";
 import { getAuthors } from "./NewBook.server";
 
@@ -13,7 +14,9 @@ const NewBook = ({ onBookAdded }) => {
     const [imageUrl, setImageUrl] = useState('');
     const [available, setAvailable] = useState(false);
 
-    const [authorOptions, setAuthorOptions] = useState([])
+    const [authorOptions, setAuthorOptions] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAuthors(
@@ -78,6 +81,11 @@ const NewBook = ({ onBookAdded }) => {
         setImageUrl('');
         setAvailable(false);
     }
+
+    const handleGoBack = () => {
+        navigate("/library");
+    }
+
 
     return (
         <Card className="m-4 w-50" bg="success">
@@ -166,9 +174,17 @@ const NewBook = ({ onBookAdded }) => {
                                 checked={available}
 
                             />
-                            <Button variant="primary" type="submit">
-                                Agregar lectura
-                            </Button>
+                            <Col md={6} className="d-flex justify-content-end">
+                                <Button className="me-3"
+                                    onClick={handleGoBack}
+                                    variant="secondary"
+                                    type="button">
+                                    Volver
+                                </Button>
+                                <Button variant="primary" type="submit">
+                                    Agregar lectura
+                                </Button>
+                            </Col>
                         </Col>
                     </Row>
                 </Form>

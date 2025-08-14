@@ -21,16 +21,13 @@ const App = () => {
     <div className="d-flex flex-column align-items-center ">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="login" />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path='/' element={<Navigate to='login' />} />
           <Route
-            path="/library"
-            element={
-              // <Protected isSignedIn={isSignedIn}>
-              <Dashboard onLogout={handleLogout} />
-              // </Protected>
-            }
-          />
+            path="/login" element={<Login onLogin={handleLogin} />} />
+          {/* <Route path='/register' element={<Register />} /> */}
+          <Route element={<Protected isSignedIn={isSignedIn} />}>
+            <Route path="/library/*" element={<Dashboard onLogout={handleLogout} />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

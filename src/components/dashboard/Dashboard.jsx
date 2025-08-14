@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-
+import { Route, Routes, useNavigate } from "react-router";
 import { addBook, deleteBook } from "./Dashboard.server";
-
 import Books from "../books/Books"
 import NewBook from "../newBook/NewBook"
 
 const Dashboard = ({ onLogout }) => {
     const [books, setBooks] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_BASE_SERVER_URL}/api/book`)
@@ -46,20 +47,27 @@ const Dashboard = ({ onLogout }) => {
                 console.log(err)
             }
         )
-
     }
+
+    const handleNavigateAddBook = () => {
+        navigate("/library/add-book", { replace: true });
+    }
+
     return (
         <>
-            <Row className="w-100">
+            <Row className="w-100 my-3">
                 <Col />
-                <Col md={3} className="d-flex justify-content-end m-3">
+                <Col md={3} className="d-flex justify-content-end ">
+                    <Button className="me-3" variant="success" onClick={handleNavigateAddBook}>Agregar libro</Button>
                     <Button onClick={onLogout}>Cerrar sesión</Button>
                 </Col>
             </Row>
             <h1>Book Champions</h1>
             <p>¡Bienvenidos a book champions!</p>
-            <NewBook onBookAdded={handleAddBook} />
-            <Books books={books} onDeleteBook={handleDeleteBook} />
+            <Routes>
+                <Route index element={<Books books={books} onDelete={handleDeleteBook} />} />
+                <Route path="/add-book" element={<NewBook onAddBook={handleAddBook} />} />
+            </Routes>
         </>
     )
 }
