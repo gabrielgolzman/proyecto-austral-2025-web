@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import AuthContainer from "../authContainer/AuthContainer";
 
 const Register = () => {
     const [username, setUsername] = useState('')
@@ -47,7 +48,7 @@ const Register = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // onLogin();
+
         navigate("/library")
     }
 
@@ -56,64 +57,59 @@ const Register = () => {
     }
 
     return (
-        <Card className="mt-5 mx-3 p-3 px-5 shadow">
-            <Card.Body>
-                <Row className="mb-2">
-                    <h5>¡Bienvenidos a Books Champion!</h5>
+        <AuthContainer>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup className="mb-4">
+                    <Form.Label>Nombre de usuario</Form.Label>
+                    <Form.Control
+                        className={errors.email ? "border border-danger" : ""}
+                        type="text"
+                        placeholder="Ingresar nombre de usuario"
+                        onChange={handleChangeUsername}
+                        value={username}
+                        ref={usernameRef}
+                    />
+                    {errors.username &&
+                        <p className="text-danger mt-2">Debe completar el campo nombre de usuario</p>}
+                </FormGroup>
+                <FormGroup className="mb-4">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        className={errors.email ? "border border-danger" : ""}
+                        type="text"
+                        placeholder="Ingresar email"
+                        onChange={handleChangeEmail}
+                        value={email}
+                        ref={emailRef}
+                    />
+                    {errors.email &&
+                        <p className="text-danger mt-2">Debe completar el campo email</p>}
+                </FormGroup>
+                <FormGroup className="mb-4">
+                    <Form.Label>Conraseña</Form.Label>
+                    <Form.Control
+                        className={errors.password && "border border-danger"}
+                        type="password"
+                        placeholder="Ingresar contraseña"
+                        onChange={handleChangePassword}
+                        value={password}
+                        ref={passwordRef}
+                    />
+                    {errors.password &&
+                        <p className="text-danger mt-2">Debe completar el campo contraseña</p>}
+                </FormGroup>
+                <Row>
+                    <Col>
+                        <Button variant="secondary" onClick={handleLoginClick} >Iniciar sesión</Button>
+                    </Col>
+                    <Col md={6} className="d-flex justify-content-end">
+                        <Button variant="primary" type="submit">
+                            Registrarse
+                        </Button>
+                    </Col>
                 </Row>
-                <Form onSubmit={handleSubmit}>
-                    <FormGroup className="mb-4">
-                        <Form.Label>Nombre de usuario</Form.Label>
-                        <Form.Control
-                            className={errors.email ? "border border-danger" : ""}
-                            type="text"
-                            placeholder="Ingresar nombre de usuario"
-                            onChange={handleChangeUsername}
-                            value={username}
-                            ref={usernameRef}
-                        />
-                        {errors.username &&
-                            <p className="text-danger mt-2">Debe completar el campo nombre de usuario</p>}
-                    </FormGroup>
-                    <FormGroup className="mb-4">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            className={errors.email ? "border border-danger" : ""}
-                            type="text"
-                            placeholder="Ingresar email"
-                            onChange={handleChangeEmail}
-                            value={email}
-                            ref={emailRef}
-                        />
-                        {errors.email &&
-                            <p className="text-danger mt-2">Debe completar el campo email</p>}
-                    </FormGroup>
-                    <FormGroup className="mb-4">
-                        <Form.Label>Conraseña</Form.Label>
-                        <Form.Control
-                            className={errors.password && "border border-danger"}
-                            type="password"
-                            placeholder="Ingresar contraseña"
-                            onChange={handleChangePassword}
-                            value={password}
-                            ref={passwordRef}
-                        />
-                        {errors.password &&
-                            <p className="text-danger mt-2">Debe completar el campo contraseña</p>}
-                    </FormGroup>
-                    <Row>
-                        <Col>
-                            <Button variant="secondary" onClick={handleLoginClick} >Iniciar sesión</Button>
-                        </Col>
-                        <Col md={6} className="d-flex justify-content-end">
-                            <Button variant="primary" type="submit">
-                                Registrarse
-                            </Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Card.Body>
-        </Card>
+            </Form>
+        </AuthContainer>
     )
 }
 

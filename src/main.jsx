@@ -4,9 +4,12 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 
 import './index.css'
+import ThemeContextProvider from './services/themeContext/ThemeContextProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <ThemeContextProvider>
+      <App />
+    </ThemeContextProvider>
   </StrictMode>,
 )

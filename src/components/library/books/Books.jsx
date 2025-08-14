@@ -1,8 +1,8 @@
 import { useState } from "react";
 import BookItem from "../bookItem/BookItem";
 import BookSearch from "../bookSearch/BookSearch";
-import DeleteModal from "../shared/deleteModal/DeleteModal";
-import ToastMessage from "../shared/toastMessage/ToastMessage";
+import DeleteModal from "../../shared/deleteModal/DeleteModal";
+import ToastMessage from "../../shared/toastMessage/ToastMessage";
 
 const Books = ({ books, onDeleteBook }) => {
     const [selectedBook, setSelectedBook] = useState('');

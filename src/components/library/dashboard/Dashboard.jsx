@@ -65,8 +65,8 @@ const Dashboard = ({ onLogout }) => {
             <h1>Book Champions</h1>
             <p>¡Bienvenidos a book champions!</p>
             <Routes>
-                <Route index element={<Books books={books} onDelete={handleDeleteBook} />} />
-                <Route path="/add-book" element={<NewBook onAddBook={handleAddBook} />} />
+                <Route index element={<Books books={books} onDeleteBook={handleDeleteBook} />} />
+                <Route path="/add-book" element={<NewBook onBookAdded={handleAddBook} />} />
             </Routes>
         </>
     )
